@@ -61,5 +61,7 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         continue-on-error: true
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
