@@ -52,4 +52,35 @@ final class RoundingTest extends TestCase
 
         self::assertSame($result, $rounding->roundToDecimal($number, $mode, $decimals));
     }
+
+    public static function getRoundIntegerCases(): array
+    {
+        return [
+            [4, 4.4, RoundingMode::ClosestToZero],
+            [5, 4.4, RoundingMode::FarthestToZero],
+            [4, 4.4, RoundingMode::RoundHalfUp],
+            [4, 4.4, RoundingMode::Floor],
+            [5, 4.4, RoundingMode::Ceil],
+
+            [4, 4.6, RoundingMode::ClosestToZero],
+            [5, 4.6, RoundingMode::FarthestToZero],
+            [5, 4.6, RoundingMode::RoundHalfUp],
+            [4, 4.6, RoundingMode::Floor],
+            [5, 4.6, RoundingMode::Ceil],
+
+            [-4, -4.4, RoundingMode::ClosestToZero],
+            [-5, -4.4, RoundingMode::FarthestToZero],
+            [-4, -4.4, RoundingMode::RoundHalfUp],
+            [-5, -4.4, RoundingMode::Floor],
+            [-4, -4.4, RoundingMode::Ceil],
+        ];
+    }
+
+    #[DataProvider('getRoundIntegerCases')]
+    public function testRoundInteger(int $result, float|int $number, RoundingMode $mode): void
+    {
+        $rounding = new Rounding();
+
+        self::assertSame($result, $rounding->roundInteger($number, $mode));
+    }
 }
