@@ -62,9 +62,12 @@ final class UnitTest extends TestCase
         ];
     }
 
-    #[DataProvider('getUnits')]
-    public function testInterval(DateInterval $interval, Unit $unit): void
+    #[DataProvider('getIntervalForUnit')]
+    public function testInterval(Unit $unit, DateInterval $interval): void
     {
-        self::assertSame($interval, $unit->interval());
+        $result = $unit->interval();
+
+        self::assertInstanceOf(DateInterval::class, $result);
+        self::assertSame($interval->format('%R %y %m %d %H %i %s %f'), $result->format('%R %y %m %d %H %i %s %f'));
     }
 }
