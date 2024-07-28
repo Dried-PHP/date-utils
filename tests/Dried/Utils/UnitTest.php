@@ -21,7 +21,10 @@ final class UnitTest extends TestCase
 
     public static function getUnits(): array
     {
-        return Unit::cases();
+        return array_map(
+            static fn (Unit $unit) => [$unit],
+            Unit::cases(),
+        );
     }
 
     #[DataProvider('getUnits')]
