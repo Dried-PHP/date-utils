@@ -70,4 +70,29 @@ final class UnitTest extends TestCase
         self::assertInstanceOf(DateInterval::class, $result);
         self::assertSame($interval->format('%R %y %m %d %H %i %s %f'), $result->format('%R %y %m %d %H %i %s %f'));
     }
+
+    public static function getPlurals(): array
+    {
+        return [
+            ['microseconds', Unit::Microsecond],
+            ['milliseconds', Unit::Millisecond],
+            ['seconds', Unit::Second],
+            ['minutes', Unit::Minute],
+            ['hours', Unit::Hour],
+            ['days', Unit::Day],
+            ['weeks', Unit::Week],
+            ['months', Unit::Month],
+            ['quarters', Unit::Quarter],
+            ['years', Unit::Year],
+            ['decades', Unit::Decade],
+            ['centuries', Unit::Century],
+            ['millennia', Unit::Millennium],
+        ];
+    }
+
+    #[DataProvider('getPlurals')]
+    public function testPlural(string $result, Unit $unit): void
+    {
+        self::assertSame($result, $unit->plural());
+    }
 }

@@ -41,4 +41,13 @@ enum Unit: string
             default => DateInterval::createFromDateString("$value $this->name"),
         };
     }
+
+    public function plural(): string
+    {
+        return match ($this) {
+            self::Century => 'centuries',
+            self::Millennium => 'millennia',
+            default => $this->value . 's',
+        };
+    }
 }
