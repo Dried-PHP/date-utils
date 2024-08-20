@@ -55,6 +55,7 @@ final class UnitTest extends TestCase
             [Unit::Day, new DateInterval('P1D')],
             [Unit::Week, new DateInterval('P7D')],
             [Unit::Month, new DateInterval('P1M')],
+            [Unit::Quarter, new DateInterval('P3M')],
             [Unit::Year, new DateInterval('P1Y')],
             [Unit::Decade, new DateInterval('P10Y')],
             [Unit::Century, new DateInterval('P100Y')],

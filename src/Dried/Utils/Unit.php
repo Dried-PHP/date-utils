@@ -35,9 +35,10 @@ enum Unit: string
     public function interval(int|float $value = 1): DateInterval
     {
         return match ($this) {
-            self::Decade => DateInterval::createFromDateString(($value * 10) . ' years'),
-            self::Century => DateInterval::createFromDateString(($value * 100) . ' years'),
-            self::Millennium => DateInterval::createFromDateString(($value * 1000) . ' years'),
+            self::Quarter => DateInterval::createFromDateString(($value * 3) . ' month'),
+            self::Decade => DateInterval::createFromDateString(($value * 10) . ' year'),
+            self::Century => DateInterval::createFromDateString(($value * 100) . ' year'),
+            self::Millennium => DateInterval::createFromDateString(($value * 1000) . ' year'),
             default => DateInterval::createFromDateString("$value $this->name"),
         };
     }
