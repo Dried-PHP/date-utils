@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dried\Utils;
 
 use DateInterval;
+use InvalidArgumentException;
 
 enum Unit: string
 {
@@ -32,15 +33,21 @@ enum Unit: string
         return self::tryFrom(strtolower($unit));
     }
 
-    public function interval(int|float $value = 1): DateInterval
+    public function modifier(int|float $value = 1): string
     {
         return match ($this) {
-            self::Quarter => DateInterval::createFromDateString(($value * 3) . ' month'),
-            self::Decade => DateInterval::createFromDateString(($value * 10) . ' year'),
-            self::Century => DateInterval::createFromDateString(($value * 100) . ' year'),
-            self::Millennium => DateInterval::createFromDateString(($value * 1000) . ' year'),
-            default => DateInterval::createFromDateString("$value $this->name"),
+            self::Quarter => ($value * 3) . ' Month',
+            self::Decade => ($value * 10) . ' Year',
+            self::Century => ($value * 100) . ' Year',
+            self::Millennium => ($value * 1000) . ' Year',
+            default => "$value $this->name",
         };
+    }
+
+    public function interval(int|float $value = 1): DateInterval
+    {
+        return DateInterval::createFromDateString($this->modifier($value))
+            ?: throw new InvalidArgumentException("Unable to create a DateInterval from $value $this->name");
     }
 
     public function plural(): string
