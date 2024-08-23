@@ -11,8 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^8.2",
-        "symfony/translation-contracts": "^3.5"
+        "php": "^8.2"
     },
     "prefer-stable": true,
     "autoload": {
