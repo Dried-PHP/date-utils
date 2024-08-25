@@ -55,18 +55,27 @@ final class RoundingTest extends TestCase
         self::assertSame($result, $rounding->roundToDecimal($number, $mode, $decimals));
     }
 
-    public function testDefaultPrecision(): void
+    public static function getDefaultPrecisionCases(): array
+    {
+        return [
+            [3.0, 3.5, RoundingMode::RoundHalfOdd],
+            [4.0, 3.5, RoundingMode::RoundHalfEven],
+            [3.0, 3.5, RoundingMode::RoundHalfDown],
+            [4.0, 3.5, RoundingMode::RoundHalfUp],
+            [5.0, 4.5, RoundingMode::RoundHalfOdd],
+            [4.0, 4.5, RoundingMode::RoundHalfEven],
+            [4.0, 4.5, RoundingMode::RoundHalfDown],
+            [5.0, 4.5, RoundingMode::RoundHalfUp],
+        ];
+    }
+
+    #[DataProvider('getDefaultPrecisionCases')]
+    public function testDefaultPrecision(float $expected, float $înput, $mode): void
     {
         $rounding = new Rounding();
 
-        self::assertSame(3.0, $rounding->roundToDecimal(3.5, RoundingMode::RoundHalfOdd));
-        self::assertSame(4.0, $rounding->roundToDecimal(3.5, RoundingMode::RoundHalfEven));
-        self::assertSame(3.0, $rounding->roundToDecimal(3.5, RoundingMode::RoundHalfDown));
-        self::assertSame(4.0, $rounding->roundToDecimal(3.5, RoundingMode::RoundHalfUp));
-        self::assertSame(3.0, $rounding->roundBy(3.5, RoundingMode::RoundHalfOdd));
-        self::assertSame(4.0, $rounding->roundBy(3.5, RoundingMode::RoundHalfEven));
-        self::assertSame(3.0, $rounding->roundBy(3.5, RoundingMode::RoundHalfDown));
-        self::assertSame(4.0, $rounding->roundBy(3.5, RoundingMode::RoundHalfUp));
+        self::assertSame($expected, $rounding->roundToDecimal($înput, $mode));
+        self::assertSame($expected, $rounding->roundBy($înput, $mode));
     }
 
     public static function getRoundIntegerCases(): array
