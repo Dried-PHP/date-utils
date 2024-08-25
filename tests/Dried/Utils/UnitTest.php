@@ -19,6 +19,50 @@ final class UnitTest extends TestCase
         self::assertCount(13, $cases);
     }
 
+    public function testAllBut(): void
+    {
+        $cases = Unit::allBut(Unit::Year, Unit::Week);
+
+        self::assertSame([
+            Unit::Millennium,
+            Unit::Century,
+            Unit::Decade,
+            Unit::Quarter,
+            Unit::Month,
+            Unit::Day,
+            Unit::Hour,
+            Unit::Minute,
+            Unit::Second,
+            Unit::Millisecond,
+            Unit::Microsecond,
+        ], $cases);
+    }
+
+    public function testTo(): void
+    {
+        $cases = Unit::Year->to(Unit::Second, [Unit::Quarter, Unit::Week]);
+
+        self::assertSame([
+            Unit::Year,
+            Unit::Month,
+            Unit::Day,
+            Unit::Hour,
+            Unit::Minute,
+            Unit::Second,
+        ], $cases);
+
+        $cases = Unit::Second->to(Unit::Year, [Unit::Quarter, Unit::Week]);
+
+        self::assertSame([
+            Unit::Second,
+            Unit::Minute,
+            Unit::Hour,
+            Unit::Day,
+            Unit::Month,
+            Unit::Year,
+        ], $cases);
+    }
+
     public static function getUnits(): array
     {
         return array_map(
