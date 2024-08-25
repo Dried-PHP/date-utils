@@ -51,7 +51,7 @@ final class UnitTest extends TestCase
             Unit::Second,
         ], $cases);
 
-        $cases = Unit::Second->to(Unit::Year, [Unit::Quarter, Unit::Week]);
+        $cases = Unit::between(Unit::Second, Unit::Year, [Unit::Quarter, Unit::Week]);
 
         self::assertSame([
             Unit::Second,
@@ -114,6 +114,32 @@ final class UnitTest extends TestCase
 
         self::assertInstanceOf(DateInterval::class, $result);
         self::assertSame($interval->format('%R %y %m %d %H %i %s %f'), $result->format('%R %y %m %d %H %i %s %f'));
+    }
+
+    public static function getModifierForUnit(): array
+    {
+        return [
+            [Unit::Microsecond, '1 Microsecond', '2 Microsecond'],
+            [Unit::Millisecond, '1 Millisecond', '2 Millisecond'],
+            [Unit::Second, '1 Second', '2 Second'],
+            [Unit::Minute, '1 Minute', '2 Minute'],
+            [Unit::Hour, '1 Hour', '2 Hour'],
+            [Unit::Day, '1 Day', '2 Day'],
+            [Unit::Week, '1 Week', '2 Week'],
+            [Unit::Month, '1 Month', '2 Month'],
+            [Unit::Quarter, '3 Month', '6 Month'],
+            [Unit::Year, '1 Year', '2 Year'],
+            [Unit::Decade, '10 Year', '20 Year'],
+            [Unit::Century, '100 Year', '200 Year'],
+            [Unit::Millennium, '1000 Year', '2000 Year'],
+        ];
+    }
+
+    #[DataProvider('getModifierForUnit')]
+    public function testModifier(Unit $unit, string $modifier, string $doubleModifier): void
+    {
+        self::assertSame($modifier, $unit->modifier());
+        self::assertSame($doubleModifier, $unit->modifier(2));
     }
 
     public static function getPlurals(): array
