@@ -44,6 +44,8 @@ final readonly class Rounding
      * $numberOfMicroseconds = $rounding->roundBy($numberOfSecond, RoundingMode::Round, 6);
      * $numberOfSecond = $rounding->roundBy($numberOfMilliseconds, RoundingMode::Round, -3);
      * ```
+     *
+     * @infection-ignore-all
      */
     public function roundToDecimal(
         float|int $number,

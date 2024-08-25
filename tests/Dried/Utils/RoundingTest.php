@@ -42,6 +42,8 @@ final class RoundingTest extends TestCase
             [12.123, 12.123_5, RoundingMode::RoundHalfOdd, 3],
             [12.124, 12.124_5, RoundingMode::RoundHalfEven, 3],
             [12.125, 12.125_5, RoundingMode::RoundHalfOdd, 3],
+            [12, 12.5, RoundingMode::RoundHalfEven, 0],
+            [13, 12.5, RoundingMode::RoundHalfOdd, 0],
         ];
     }
 
@@ -51,6 +53,29 @@ final class RoundingTest extends TestCase
         $rounding = new Rounding();
 
         self::assertSame($result, $rounding->roundToDecimal($number, $mode, $decimals));
+    }
+
+    public static function getDefaultPrecisionCases(): array
+    {
+        return [
+            [3.0, 3.5, RoundingMode::RoundHalfOdd],
+            [4.0, 3.5, RoundingMode::RoundHalfEven],
+            [3.0, 3.5, RoundingMode::RoundHalfDown],
+            [4.0, 3.5, RoundingMode::RoundHalfUp],
+            [5.0, 4.5, RoundingMode::RoundHalfOdd],
+            [4.0, 4.5, RoundingMode::RoundHalfEven],
+            [4.0, 4.5, RoundingMode::RoundHalfDown],
+            [5.0, 4.5, RoundingMode::RoundHalfUp],
+        ];
+    }
+
+    #[DataProvider('getDefaultPrecisionCases')]
+    public function testDefaultPrecision(float $expected, float $înput, $mode): void
+    {
+        $rounding = new Rounding();
+
+        self::assertSame($expected, $rounding->roundToDecimal($înput, $mode));
+        self::assertSame($expected, $rounding->roundBy($înput, $mode));
     }
 
     public static function getRoundIntegerCases(): array
