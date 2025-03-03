@@ -121,6 +121,8 @@ final class UnitTest extends TestCase
     {
         $exception = new UnitToIntervalException(INF, 'Millennium', 'INF Year');
 
+        self::assertSame('Unable to create a DateInterval from INF Millennium', $exception->getMessage());
+        self::assertSame(0, $exception->getCode());
         self::assertSame(INF, $exception->getValue());
         self::assertSame('Millennium', $exception->getUnitName());
         self::assertSame('INF Year', $exception->getModifier());
