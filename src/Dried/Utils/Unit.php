@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dried\Utils;
 
 use DateInterval;
-use InvalidArgumentException;
+use Exception;
 
 enum Unit: string
 {
@@ -107,8 +107,14 @@ enum Unit: string
 
     public function interval(int|float $value = 1): DateInterval
     {
-        return DateInterval::createFromDateString($this->modifier($value))
-            ?: throw new InvalidArgumentException("Unable to create a DateInterval from $value $this->name");
+        $modifier = $this->modifier($value);
+
+        try {
+            return DateInterval::createFromDateString($this->modifier($value))
+                ?: throw new UnitToIntervalException($value, $this->name, $modifier);
+        } catch (Exception $exception) {
+            throw new UnitToIntervalException($value, $this->name, $modifier, previous: $exception);
+        }
     }
 
     public function plural(): string

@@ -6,7 +6,7 @@ namespace Tests\Dried\Utils;
 
 use DateInterval;
 use Dried\Utils\Unit;
-use InvalidArgumentException;
+use Dried\Utils\UnitToIntervalException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -119,9 +119,13 @@ final class UnitTest extends TestCase
 
     public function testInvalidInterval(): void
     {
-        self::expectExceptionObject(new InvalidArgumentException(
-            'Unable to create a DateInterval from INF Millennium',
-        ));
+        $exception = new UnitToIntervalException(INF, 'Millennium', 'INF Year');
+
+        self::assertSame(INF, $exception->getValue());
+        self::assertSame('Millennium', $exception->getUnitName());
+        self::assertSame('INF Year', $exception->getModifier());
+
+        self::expectExceptionObject($exception);
 
         Unit::Millennium->interval(INF);
     }
