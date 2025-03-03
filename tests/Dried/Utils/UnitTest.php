@@ -6,6 +6,7 @@ namespace Tests\Dried\Utils;
 
 use DateInterval;
 use Dried\Utils\Unit;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -114,6 +115,15 @@ final class UnitTest extends TestCase
 
         self::assertInstanceOf(DateInterval::class, $result);
         self::assertSame($interval->format('%R %y %m %d %H %i %s %f'), $result->format('%R %y %m %d %H %i %s %f'));
+    }
+
+    public function testInvalidInterval(): void
+    {
+        self::expectExceptionObject(new InvalidArgumentException(
+            'Unable to create a DateInterval from INF Millennium',
+        ));
+
+        Unit::Millennium->interval(INF);
     }
 
     public static function getModifierForUnit(): array
