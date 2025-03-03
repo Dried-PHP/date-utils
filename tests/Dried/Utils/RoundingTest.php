@@ -16,7 +16,12 @@ final class RoundingTest extends TestCase
         return [
             [12, 10, RoundingMode::Ceil, 3],
             [5.75, 5.84, RoundingMode::Floor, 0.25],
+            [10, 10.4, RoundingMode::RoundHalfUp, 1],
             [11, 10.5, RoundingMode::RoundHalfUp, 1],
+            [11, 10.7, RoundingMode::RoundHalfUp, 1],
+            [10, 10.4, RoundingMode::RoundHalfDown, 1],
+            [10, 10.5, RoundingMode::RoundHalfDown, 1],
+            [11, 10.7, RoundingMode::RoundHalfDown, 1],
         ];
     }
 
@@ -98,6 +103,12 @@ final class RoundingTest extends TestCase
             [-4, -4.4, RoundingMode::RoundHalfUp],
             [-5, -4.4, RoundingMode::Floor],
             [-4, -4.4, RoundingMode::Ceil],
+
+            [-4, -4.6, RoundingMode::ClosestToZero],
+            [-5, -4.6, RoundingMode::FarthestToZero],
+            [-5, -4.6, RoundingMode::RoundHalfUp],
+            [-5, -4.6, RoundingMode::Floor],
+            [-4, -4.6, RoundingMode::Ceil],
         ];
     }
 
