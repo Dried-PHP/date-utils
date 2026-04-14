@@ -61,6 +61,12 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         continue-on-error: true
 
+      - name: Coverage - Qltysh
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: clover.xml
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v6.0.0
         with:
