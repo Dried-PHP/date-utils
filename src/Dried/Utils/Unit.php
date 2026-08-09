@@ -120,9 +120,22 @@ enum Unit: string
     public function plural(): string
     {
         return match ($this) {
-            self::Century => 'centuries',
             self::Millennium => 'millennia',
+            self::Century => 'centuries',
             default => $this->value . 's',
+        };
+    }
+
+    public function shortName(): string
+    {
+        return match ($this) {
+            self::Millennium => 'ky',
+            self::Century => 'hy',
+            self::Decade => 'day',
+            self::Minute => 'min',
+            self::Millisecond => 'ms',
+            self::Microsecond => 'µs',
+            default => substr($this->value, 0, 1),
         };
     }
 

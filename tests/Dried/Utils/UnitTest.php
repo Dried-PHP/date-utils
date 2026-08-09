@@ -182,4 +182,30 @@ final class UnitTest extends TestCase
     {
         self::assertSame($result, $unit->plural());
     }
+
+
+    public static function getShortNames(): array
+    {
+        return [
+            ['µs', Unit::Microsecond],
+            ['ms', Unit::Millisecond],
+            ['s', Unit::Second],
+            ['min', Unit::Minute],
+            ['h', Unit::Hour],
+            ['d', Unit::Day],
+            ['w', Unit::Week],
+            ['m', Unit::Month],
+            ['q', Unit::Quarter],
+            ['y', Unit::Year],
+            ['day', Unit::Decade],
+            ['hy', Unit::Century],
+            ['ky', Unit::Millennium],
+        ];
+    }
+
+    #[DataProvider('getShortNames')]
+    public function testShortName(string $result, Unit $unit): void
+    {
+        self::assertSame($result, $unit->shortName());
+    }
 }
