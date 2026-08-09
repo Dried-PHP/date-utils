@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Dried\Utils;
+
 use Dried\Utils\Unit;
 use Dried\Utils\UnitAmount;
 use PHPUnit\Framework\Attributes\DataProvider;
